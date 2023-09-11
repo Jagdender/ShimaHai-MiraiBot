@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShimaHai", "ShimaHai\ShimaHai.csproj", "{B656C899-CFF5-40A6-B482-4DB89D136717}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShimaHai", "ShimaHai\ShimaHai.csproj", "{B656C899-CFF5-40A6-B482-4DB89D136717}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageHandler", "MessageHandler\MessageHandler.csproj", "{38122BF2-E01F-415D-B17D-EE9539E18C94}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageRecipient", "MessageRecipient\MessageRecipient.csproj", "{2E02E5B5-A93A-4246-A6B7-A18DEBE15676}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{B656C899-CFF5-40A6-B482-4DB89D136717}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B656C899-CFF5-40A6-B482-4DB89D136717}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B656C899-CFF5-40A6-B482-4DB89D136717}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38122BF2-E01F-415D-B17D-EE9539E18C94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38122BF2-E01F-415D-B17D-EE9539E18C94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38122BF2-E01F-415D-B17D-EE9539E18C94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38122BF2-E01F-415D-B17D-EE9539E18C94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E02E5B5-A93A-4246-A6B7-A18DEBE15676}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E02E5B5-A93A-4246-A6B7-A18DEBE15676}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E02E5B5-A93A-4246-A6B7-A18DEBE15676}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E02E5B5-A93A-4246-A6B7-A18DEBE15676}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
