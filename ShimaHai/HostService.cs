@@ -1,18 +1,40 @@
-﻿using MeowMiraiLib;
+﻿using MessageResolverLib;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using MiraiClient;
 
 namespace ShimaHai
 {
     internal class HostService : IHostedService
     {
-        public Task StartAsync(CancellationToken cancellationToken)
+        private readonly ShimahaiClient _client;
+        private readonly IMessageRecipient _recipient;
+        private readonly IHostApplicationLifetime _application;
+        private readonly ILogger<HostService> _logger;
+
+        public HostService(
+            ShimahaiClient client,
+            IMessageRecipient recipient,
+            IHostApplicationLifetime application,
+            ILogger<HostService> logger
+        )
         {
-            Global.G_Client = new("");
+            _client = client;
+            _recipient = recipient;
+            _application = application;
+            _logger = logger;
+        }
+
+        public async Task StartAsync(CancellationToken cancellationToken)
+        {
+            var isSuccess = await _client.StartAsync();
+            if (!isSuccess)
+            {
+                _logger.LogCritical("Bot start failed.");
+                _application.StopApplication();
+            }
+
+            _client.Client.OnGroupMessageReceive += _recipient.ReceiveMessage;
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
@@ -20,6 +42,8 @@ namespace ShimaHai
             Console.WriteLine("Application has shut down, press any key to exit.");
 
             Console.ReadKey();
+
+            return Task.CompletedTask;
         }
     }
 }
