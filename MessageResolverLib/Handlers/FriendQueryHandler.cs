@@ -10,14 +10,14 @@ namespace MessageResolverLib.Handlers
 {
     public class FriendQueryHandler : IMessageHandler
     {
-        private readonly IFriendController _controller;
+        private readonly FriendController _controller;
         private readonly AppSettings _options;
         private readonly ShimahaiClient _client;
         private readonly IMessageSender _messenger;
         private readonly ILogger<FriendQueryHandler> _logger;
 
         public FriendQueryHandler(
-            IFriendController controller,
+            FriendController controller,
             IOptionsSnapshot<AppSettings> options,
             ShimahaiClient client,
             IMessageSender messenger,
@@ -32,6 +32,8 @@ namespace MessageResolverLib.Handlers
         }
 
         public bool CanHandle { get; set; } = true;
+        public bool IsRedirective { get; set; } = false;
+        public long RedirectTarget { get; set; } = 0;
 
         public async Task HandleMessageAsync(MessagePackage package)
         {
@@ -42,14 +44,19 @@ namespace MessageResolverLib.Handlers
             var parameter = isHC
                 ? package.Message[..(package.Message.Length - 2)].TrimEnd()
                 : package.Message;
-            _logger.LogInformation("Parameter: {arg} , IsHC:{isHC}", parameter, isHC);
+            _logger.LogInformation(
+                "Handler: {handler} , Parameter: {arg} , IsHC: {isHC}",
+                nameof(FriendQueryHandler),
+                parameter,
+                isHC
+            );
 
             if (int.TryParse(parameter, out int id))
                 friend = await _controller.GetFriend(id);
             else
                 friend = await _controller.GetFriend(parameter, isHC: isHC);
             if (friend is null)
-                _ = _messenger.AddText("没有找到你说的Friendね").SendMessageAsync(package.Messenger);
+                _ = RespondMessageAsync(_messenger.AddText("没有找到你说的Friendね"), package);
             else
             {
                 var m = _messenger
@@ -64,9 +71,24 @@ namespace MessageResolverLib.Handlers
                     friend.Id + ".png"
                 );
                 if (File.Exists(path))
-                    _ = m.AddImage(imagePath: path).SendMessageAsync(package.Messenger);
+                    _ = RespondMessageAsync(m.AddImage(imagePath: path), package);
                 else
-                    _ = m.AddText("\n这个Friend还没有注册图片ね~").SendMessageAsync(package.Messenger);
+                    _ = RespondMessageAsync(m.AddText("\n这个Friend还没有注册图片ね~"), package);
+            }
+        }
+
+        private Task RespondMessageAsync(IMessageSender message, MessagePackage package)
+        {
+            if (IsRedirective)
+            {
+                if (RedirectTarget == 0)
+                    throw new ArgumentException("The RedirectTarget hasn't been initialized.");
+                else
+                    return message.SendMessageAsync(RedirectTarget);
+            }
+            else
+            {
+                return message.SendMessageAsync(package.Messenger);
             }
         }
     }

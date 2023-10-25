@@ -83,7 +83,7 @@ namespace ShimaHai.Migrations
                     b.ToTable("friends", (string)null);
                 });
 
-            modelBuilder.Entity("ShimahaiDatabase.Models.FriendData", b =>
+            modelBuilder.Entity("ShimahaiDatabase.Models.FriendDatum", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -128,14 +128,14 @@ namespace ShimaHai.Migrations
 
             modelBuilder.Entity("ShimahaiDatabase.Models.Friend", b =>
                 {
-                    b.HasOne("ShimahaiDatabase.Models.FriendData", "FriendData")
+                    b.HasOne("ShimahaiDatabase.Models.FriendDatum", "FriendDatum")
                         .WithMany()
                         .HasForeignKey("FriendDataId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_friends_friend_data_friend_data_id");
 
-                    b.Navigation("FriendData");
+                    b.Navigation("FriendDatum");
                 });
 #pragma warning restore 612, 618
         }

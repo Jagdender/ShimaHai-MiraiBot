@@ -1,6 +1,6 @@
 ﻿namespace ShimahaiDatabase.Models
 {
-    public class FriendData
+    public class FriendDatum
     {
         public int Id { get; set; }
         public int Rarity { get; set; }

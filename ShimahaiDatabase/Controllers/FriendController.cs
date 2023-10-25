@@ -3,7 +3,7 @@ using ShimahaiDatabase.Models;
 
 namespace ShimahaiDatabase.Controllers
 {
-    public class FriendController : IFriendController
+    public class FriendController
     {
         private readonly DatabaseContext _databaseContext;
 
@@ -50,7 +50,7 @@ namespace ShimahaiDatabase.Controllers
             );
             if (query == QueryBy.ChineseName || isNone)
             {
-                friend = await expression.FirstOrDefaultAsync(f => f.NameCn.ToLower() == param);
+                friend = await expression.FirstOrDefaultAsync(f => f.NameCn == param);
                 if ((friend is null && !isNone) || friend is not null)
                     return friend;
             }
@@ -66,20 +66,30 @@ namespace ShimahaiDatabase.Controllers
                 if ((friend is null && !isNone) || friend is not null)
                     return friend;
             }
-            if (query == QueryBy.SciName || isNone)
-            {
-                friend = await expression.FirstOrDefaultAsync(f => f.NameSci.ToLower() == param);
-                if ((friend is null && !isNone) || friend is not null)
-                    return friend;
-            }
             if (query == QueryBy.Nickname || isNone)
             {
                 friend = await expression.FirstOrDefaultAsync(f => f.Nickname.Contains(param));
                 if ((friend is null && !isNone) || friend is not null)
                     return friend;
             }
+            if (query == QueryBy.ScienceName || isNone)
+            {
+                friend = await expression.FirstOrDefaultAsync(f => f.NameSci.ToLower() == param);
+                if ((friend is null && !isNone) || friend is not null)
+                    return friend;
+            }
 
             return null;
         }
+    }
+
+    public enum QueryBy
+    {
+        None,
+        ChineseName,
+        DefaultName,
+        EnglishName,
+        Nickname,
+        ScienceName
     }
 }

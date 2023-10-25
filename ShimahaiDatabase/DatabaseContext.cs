@@ -9,6 +9,6 @@ namespace ShimahaiDatabase
             : base(options) { }
 
         public DbSet<Friend> Friends { get; set; }
-        public DbSet<FriendData> FriendData { get; set; }
+        public DbSet<FriendDatum> FriendData { get; set; }
     }
 }

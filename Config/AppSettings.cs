@@ -37,5 +37,6 @@
         public required string Url { get; init; }
         public required string AuthToken { get; init; }
         public required string Twid { get; init; }
+        public required string[] Subscribers { get; init; }
     }
 }

@@ -3,7 +3,7 @@ using MeowMiraiLib.Msg.Type;
 using MessageResolverLib.Abstractions;
 using MiraiClient;
 
-namespace MessageResolverLib
+namespace MessageResolverLib.Senders
 {
     public class ShimahaiSender : IMessageSender
     {

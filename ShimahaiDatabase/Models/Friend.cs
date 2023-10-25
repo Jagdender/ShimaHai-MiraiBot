@@ -12,6 +12,6 @@
         public string Introduction { get; set; } = string.Empty;
         public string Greeting { get; set; } = string.Empty;
 
-        public FriendData FriendData { get; set; } = null!;
+        public FriendDatum FriendDatum { get; set; } = null!;
     }
 }
